@@ -1,9 +1,11 @@
+/* eslint-disable react/react-in-jsx-scope */
+
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { logout } from '../redux/user/session-redux';
 
-const Nav = () => {
+function Nav() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -62,14 +64,14 @@ const Nav = () => {
 
       <nav className={!showMenu ? 'display-none' : ''}>
         <NavLink to="/" className="logo" onClick={toggleMenu}>
-          QuickMaths
+          Laptops
         </NavLink>
 
         {isLoggedIn ? (
           <ul className="menuLinks">
             <li>
               <NavLink to="/" onClick={toggleMenu}>
-                Tutors
+                Laptops
               </NavLink>
             </li>
             <li>
@@ -83,13 +85,13 @@ const Nav = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/add_tutor" onClick={toggleMenu}>
-                Add tutor
+              <NavLink to="/add_laptop" onClick={toggleMenu}>
+                Add laptop
               </NavLink>
             </li>
             <li>
-              <NavLink to="/delete_tutor" onClick={toggleMenu}>
-                Delete tutor
+              <NavLink to="/delete_laptop" onClick={toggleMenu}>
+                Delete laptop
               </NavLink>
             </li>
           </ul>
@@ -157,6 +159,6 @@ const Nav = () => {
       </nav>
     </header>
   );
-};
+}
 
 export default Nav;

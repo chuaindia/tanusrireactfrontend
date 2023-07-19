@@ -1,14 +1,15 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { destroyTutor } from '../../redux/tutors/tutors';
+import { destroyLaptop } from '../../redux/laptops/laptops';
 
-const DeleteItem = () => {
+function DeleteItem() {
   const dispatch = useDispatch();
 
   const redirection = useNavigate();
 
-  const availableTutors = useSelector((store) => store.tutors.tutors);
+  const availableLaptops = useSelector((store) => store.laptops.laptops);
 
   const isLoggedIn = JSON.parse(window.localStorage.getItem('logged_in'));
 
@@ -22,22 +23,20 @@ const DeleteItem = () => {
 
   const removeData = (e) => {
     const id = Number(e.target.value);
-    dispatch(destroyTutor(id));
+    dispatch(destroyLaptop(id));
   };
 
   if (isLoggedIn) {
     return (
-      <section className="delete-tutor-page">
-        <h1>Delete a tutor</h1>
+      <section className="delete-laptop-page">
+        <h1>Delete a laptop</h1>
 
-        {availableTutors.length !== 0 ? (
-          <ul className="available-tutors-list">
-            {availableTutors.map((item) => (
-              <li className="available-tutor" key={item.id}>
+        {availableLaptops.length !== 0 ? (
+          <ul className="available-laptops-list">
+            {availableLaptops.map((item) => (
+              <li className="available-laptop" key={item.id}>
                 <span>
-                  {item.firstName}
-                  {' '}
-                  {item.lastName}
+                  {item.nameame}
                 </span>
                 <button
                   type="button"
@@ -53,7 +52,7 @@ const DeleteItem = () => {
           </ul>
         ) : (
           <div className="no-items-available">
-            <div>There are no tutors available.</div>
+            <div>There are no laptops available.</div>
             <button type="button"><Link to="/"> Go back to the home page</Link></button>
           </div>
         )}
@@ -65,6 +64,6 @@ const DeleteItem = () => {
       <p>Please log in to access this page</p>
     </div>
   );
-};
+}
 
 export default DeleteItem;

@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchReservation, setMsgAction } from '../redux/user/session-redux';
 
-const Reserve = () => {
-  const { tutors } = useSelector((state) => state.tutors);
+function Reserve() {
+  const { laptops } = useSelector((state) => state.laptops);
   const { creationMsg, user } = useSelector((state) => state.users);
 
   const isLoggedIn = JSON.parse(window.localStorage.getItem('logged_in'));
@@ -15,11 +15,11 @@ const Reserve = () => {
 
   const navigate = useNavigate();
 
-  const { chosenTutorId } = location.state || -1;
+  const { chosenLaptopId } = location.state || -1;
 
-  const [hour, setHour] = useState('');
-  const [date, setDate] = useState('');
-  const [tutorId, setTutorId] = useState(chosenTutorId);
+  const [durationOfHire, setDurationOfHire] = useState('');
+  const [dateOfReservation, setDateOfReservation] = useState('');
+  const [laptopId, setLaptopId] = useState(chosenLaptopId);
   const [city, setCity] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [created, setCreated] = useState(false);
@@ -40,7 +40,7 @@ const Reserve = () => {
       }, 2500);
     }
     if (creationMsg === 'Reservation couldn\'t be created.') {
-      setErrorMessage('Oops! Reservation couldn\'t be created. Can\'t reserve the same tutor on the same day and hour twice.');
+      setErrorMessage('Oops! Reservation couldn\'t be created. Can\'t reserve the same laptop on the same day and hour twice.');
       dispatch(setMsgAction());
     }
   }, [creationMsg, created, dispatch, navigate, isLoggedIn]);
@@ -53,7 +53,7 @@ const Reserve = () => {
     );
   }
 
-  const hours = [
+  const durationOfHires = [
     '8am - 9am',
     '9am - 10am',
     '10am - 11am',
@@ -84,38 +84,41 @@ const Reserve = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (hour === '' || city === '' || date === '' || tutorId === -1) {
+    if (durationOfHire === '' || city === '' || dateOfReservation === '' || laptopId === -1) {
       setErrorMessage('All fields are required');
       return;
     }
-    dispatch(fetchReservation({
-      city, hour, date, tutor_id: tutorId, user_id: user.id,
-    }));
+    dispatch(
+      fetchReservation({
+        city,
+        duration_of_hire: durationOfHire,
+        date_of_reservation: dateOfReservation,
+        laptop_id: laptopId,
+        user_id: user.id,
+      }),
+    );
   };
 
   const getCurrentDate = () => new Date().toJSON().slice(0, 10);
 
   return (
-    <section className="reserve-tutor-page">
-      <h1>BOOK A SESSION WITH A TUTOR</h1>
+    <section className="reserve-laptop-page">
+      <h1>CHOOSE A LAPTOP</h1>
 
       <div className="reserve-page-divider" />
       <p>
-        Our app has highly experienced math teachers who specialize in various
-        subjects, each with years of experience teaching students of all levels,
-        using proven teaching methods and resources to ensure that you grasp
-        concepts and apply them practically.
+        This app will allow you to choice a laptop to be hired following your demand.
       </p>
 
       <form onSubmit={handleSubmit} className="reserve-form">
-        <select defaultValue={chosenTutorId || ''} name="tutor_id" id="tutor-drop-down" onChange={(e) => setTutorId(e.target.value)}>
-          <option value="">Select a tutor</option>
-          {tutors.map((tutor) => (
+        <select defaultValue={chosenLaptopId || ''} name="laptop_id" id="laptop-drop-down" onChange={(e) => setLaptopId(e.target.value)}>
+          <option value="">Select a laptop</option>
+          {laptops.map((laptop) => (
             <option
-              key={tutor.id + tutor.firstName}
-              value={tutor.id}
+              key={laptop.id + laptop.firstName}
+              value={laptop.id}
             >
-              {`${tutor.firstName} ${tutor.lastName}`}
+              {`${laptop.nameame}`}
             </option>
           ))}
         </select>
@@ -129,13 +132,13 @@ const Reserve = () => {
           ))}
         </select>
 
-        <input type="date" id="date-picker" name="date" min={getCurrentDate()} onChange={(e) => setDate(e.target.value)} />
+        <input type="date" id="date-picker" name="date" min={getCurrentDate()} onChange={(e) => setDateOfReservation(e.target.value)} />
 
-        <select name="hour" id="hour-dropdown" onChange={(e) => setHour(e.target.value)}>
+        <select name="hour" id="hour-dropdown" onChange={(e) => setDurationOfHire(e.target.value)}>
           <option value="">Select an hour</option>
-          {hours.map((hour) => (
-            <option key={hour} value={hour}>
-              {hour}
+          {durationOfHires.map((durationOfHire) => (
+            <option key={durationOfHire} value={durationOfHire}>
+              {durationOfHire}
             </option>
           ))}
         </select>
@@ -149,6 +152,6 @@ const Reserve = () => {
       </div>
     </section>
   );
-};
+}
 
 export default Reserve;

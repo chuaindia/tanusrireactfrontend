@@ -1,63 +1,66 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
+// import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
 import { IoChevronForwardCircleOutline } from 'react-icons/io5';
 
-const SingleTutor = () => {
+function SingleLaptop() {
   const { id } = useParams();
-  const tutor = useSelector((state) => state.tutors.tutors).find(
+  const laptop = useSelector((state) => state.laptops.laptops).find(
     (item) => item.id === Number(id),
   );
-  const state = useSelector((state) => state.tutors.tutors);
+  const state = useSelector((state) => state.laptops.laptops);
 
-  if (!tutor && state.length === 0) {
+  if (!laptop && state.length === 0) {
     return <div className="loading">Loading</div>;
   }
-  if (!tutor && state.length !== 0) {
+  if (!laptop && state.length !== 0) {
     return <div className="loading">Element not found</div>;
   }
   return (
-    <section className="tutor-details-page">
-      <div className="tutor-photo-container">
+    <section className="laptop-details-page">
+      <div className="laptop-photo-container">
         <img
-          src={tutor.photoUrl}
-          alt="tutor"
-          className="detailsPageTutorPhoto"
+          src={laptop.imageUrl}
+          alt="laptop"
+          className="detailsPageLaptopPhoto"
         />
       </div>
-      <div className="tutor-details-container">
+      <div className="laptop-details-container">
         <h1>
-          {tutor.firstName}
-          {' '}
-          {tutor.lastName}
+          {laptop.name}
         </h1>
-        <p className="tutor-description">
-          {tutor.description}
+        <p className="laptop-description">
+          {laptop.description}
         </p>
         <ul className="details">
           <li>
-            <span>Hourly fee: </span>
+            <span>Price: </span>
             <span>
-              {tutor.hourlyFee}
+              {laptop.price}
               $
             </span>
           </li>
           <li>
-            <span>Years of experience: </span>
-            <span>{tutor.experience}</span>
+            <span>Model Year: </span>
+            <span>{laptop.model_year}</span>
           </li>
           <li>
-            <span>Rating: </span>
-            <span>{tutor.rating}</span>
+            <span>Rom_size: </span>
+            <span>{laptop.rom_size}</span>
+          </li>
+          <li>
+            <span>Ram_size: </span>
+            <span>{laptop.ram_size}</span>
           </li>
         </ul>
-        <ul className="tutor-social-links">
+        {/* <ul className="laptop-social-links">
           <li>
             <a
               href={
-                tutor.fbLink !== 'blank' ? tutor.fbLink : 'https://facebook.com'
+                laptop.fbLink !== 'blank' ? laptop.fbLink : 'https://facebook.com'
               }
-              className="tutor-sm-link"
+              className="laptop-sm-link"
               target="_blank"
               rel="noreferrer"
               aria-label="facebook page"
@@ -68,9 +71,9 @@ const SingleTutor = () => {
           <li>
             <a
               href={
-                tutor.igLink !== 'blank' ? tutor.igLink : 'https://instagram.com'
+                laptop.igLink !== 'blank' ? laptop.igLink : 'https://instagram.com'
               }
-              className="tutor-sm-link"
+              className="laptop-sm-link"
               target="_blank"
               rel="noreferrer"
               aria-label="instagram page"
@@ -81,11 +84,11 @@ const SingleTutor = () => {
           <li>
             <a
               href={
-                tutor.twitterLink !== 'blank'
-                  ? tutor.twitterLink
+                laptop.twitterLink !== 'blank'
+                  ? laptop.twitterLink
                   : 'https://twitter.com'
               }
-              className="tutor-sm-link"
+              className="laptop-sm-link"
               target="_blank"
               rel="noreferrer"
               aria-label="twitter page"
@@ -93,11 +96,11 @@ const SingleTutor = () => {
               <FaTwitter />
             </a>
           </li>
-        </ul>
+        </ul> */}
         <Link
           className="makeReservationButton"
           to="/reserve"
-          state={{ chosenTutorId: tutor.id }}
+          state={{ chosenLaptopId: laptop.id }}
         >
           <button type="button">
             Make reservation
@@ -108,6 +111,6 @@ const SingleTutor = () => {
       </div>
     </section>
   );
-};
+}
 
-export default SingleTutor;
+export default SingleLaptop;

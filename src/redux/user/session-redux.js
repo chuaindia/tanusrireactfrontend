@@ -17,7 +17,7 @@ const initialState = {
 };
 
 // Reducer
-const userReducer = (state = initialState, action) => {
+const userReducer = (action, state = initialState) => {
   switch (action.type) {
     case FULLFILED:
       return {

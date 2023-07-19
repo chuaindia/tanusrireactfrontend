@@ -1,32 +1,33 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { userSession } from '../../redux/user/session-redux';
 
-const Login = () => {
+function Login() {
   const dispatch = useDispatch();
 
   const redirection = useNavigate();
 
   const userData = useSelector((state) => state.users);
 
-  const [usernameState, setUsernameState] = useState('');
+  const [nameState, setNameState] = useState('');
   const [existState, setExistState] = useState(false);
   const [clicked, setClickedState] = useState(false);
   const [validDisplayState, setValidDisplayState] = useState(false);
 
   const userDispatch = () => {
     setClickedState(true);
-    if (usernameState.length === 0) {
+    if (nameState.length === 0) {
       setValidDisplayState(true);
       setExistState(false);
     } else {
-      dispatch(userSession({ username: usernameState }, 'login'));
+      dispatch(userSession({ name: nameState }, 'login'));
     }
   };
 
-  const setUsername = (e) => {
-    setUsernameState(e.target.value);
+  const setName = (e) => {
+    setNameState(e.target.value);
   };
 
   useEffect(() => {
@@ -39,12 +40,12 @@ const Login = () => {
     if (userData.logged_in === true) {
       setExistState(false);
       localStorage.setItem('logged_in', true);
-      localStorage.setItem('user', userData.user.username);
+      localStorage.setItem('user', userData.user.name);
     }
     if (localStorage.getItem('logged_in') === 'true') {
       const user = localStorage.getItem('user');
       if (!userData) {
-        dispatch(userSession({ username: user }, 'login'));
+        dispatch(userSession({ name: user }, 'login'));
       }
       redirection('/');
     }
@@ -58,10 +59,10 @@ const Login = () => {
       <form action="" className="user-form flex">
         <input
           type="input"
-          name="username"
-          placeholder="Username"
-          id="username"
-          onChange={setUsername}
+          name="name"
+          placeholder="Name"
+          id="name"
+          onChange={setName}
           required
         />
         <div
@@ -78,7 +79,7 @@ const Login = () => {
             display: validDisplayState ? 'inherit' : 'none',
           }}
         >
-          <p>Username field can not be empty</p>
+          <p>User name field can not be empty</p>
         </div>
         <button
           type="button"
@@ -98,6 +99,6 @@ const Login = () => {
       </form>
     </section>
   );
-};
+}
 
 export default Login;

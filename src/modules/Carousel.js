@@ -1,17 +1,18 @@
+/* eslint-disable react/react-in-jsx-scope */
+import PropTypes from 'prop-types';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import { IconContext } from 'react-icons';
-import PropTypes from 'prop-types';
-import Tutor from './Tutor';
+import Laptop from './Laptop';
 
-const Carousel = ({ tutors }) => {
+function Carousel({ laptops }) {
   const handlePrevClick = () => {
     const carousel = document.querySelector('.carousel');
-    const item = document.querySelector('.tutor-card');
+    const item = document.querySelector('.laptop-card');
     carousel.scrollLeft -= item.clientWidth;
   };
   const handleNextClick = () => {
     const carousel = document.querySelector('.carousel');
-    const item = document.querySelector('.tutor-card');
+    const item = document.querySelector('.laptop-card');
     carousel.scrollLeft += item.clientWidth;
   };
 
@@ -31,9 +32,9 @@ const Carousel = ({ tutors }) => {
         </IconContext.Provider>
       </button>
       <ul className="carousel">
-        {tutors.map((item) => (
+        {laptops.map((item) => (
           <li key={item.id}>
-            <Tutor obj={item} />
+            <Laptop obj={item} />
           </li>
         ))}
       </ul>
@@ -52,21 +53,18 @@ const Carousel = ({ tutors }) => {
       </button>
     </div>
   );
-};
+}
 
 Carousel.propTypes = {
-  tutors: PropTypes.arrayOf(
+  laptops: PropTypes.arrayOf(
     PropTypes.shape({
-      firstName: PropTypes.string.isRequired,
-      lastName: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
-      fbLink: PropTypes.string.isRequired,
-      igLink: PropTypes.string.isRequired,
-      twitterLink: PropTypes.string.isRequired,
-      photoUrl: PropTypes.string.isRequired,
-      hourlyFee: PropTypes.number.isRequired,
-      experience: PropTypes.number.isRequired,
-      rating: PropTypes.number.isRequired,
+      imageUrl: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      modelYear: PropTypes.number.isRequired,
+      romSize: PropTypes.number.isRequired,
+      ramSize: PropTypes.number.isRequired,
     }),
   ).isRequired,
 };

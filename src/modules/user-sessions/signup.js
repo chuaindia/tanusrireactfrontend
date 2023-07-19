@@ -1,16 +1,17 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { userSession } from '../../redux/user/session-redux';
 
-const Signup = () => {
+function Signup() {
   const dispatch = useDispatch();
 
   const redirection = useNavigate();
 
   const userData = useSelector((state) => state.users);
 
-  const [usernameState, setUsernameState] = useState('');
+  const [nameState, setNameState] = useState('');
   const [existState, setExistState] = useState(false);
   const [validMsgState, setValidMsgState] = useState('');
   const [clicked, setClickedState] = useState(false);
@@ -18,21 +19,21 @@ const Signup = () => {
 
   const validate = () => {
     setClickedState(true);
-    if (usernameState.length === 0) {
-      setValidMsgState('Username field can not be empty');
+    if (nameState.length === 0) {
+      setValidMsgState('User name field can not be empty');
       setValidDisplayState(true);
       setExistState(false);
-    } else if (usernameState.length < 6) {
-      setValidMsgState('Username must be at least 6 characters');
+    } else if (nameState.length < 6) {
+      setValidMsgState('Use rname must be at least 6 characters');
       setValidDisplayState(true);
       setExistState(false);
-    } else if (usernameState.length >= 6) {
-      dispatch(userSession({ username: usernameState }, 'signup'));
+    } else if (nameState.length >= 6) {
+      dispatch(userSession({ name: nameState }, 'signup'));
     }
   };
 
-  const setUsername = (e) => {
-    setUsernameState(e.target.value);
+  const setName = (e) => {
+    setNameState(e.target.value);
   };
 
   useEffect(() => {
@@ -45,12 +46,12 @@ const Signup = () => {
     if (userData.logged_in === true) {
       setExistState(false);
       localStorage.setItem('logged_in', true);
-      localStorage.setItem('user', userData.user.username);
+      localStorage.setItem('user', userData.user.name);
     }
     if (localStorage.getItem('logged_in') === 'true') {
       const user = localStorage.getItem('user');
       if (!userData) {
-        dispatch(userSession({ username: user }, 'login'));
+        dispatch(userSession({ name: user }, 'login'));
       }
       redirection('/');
     }
@@ -64,10 +65,10 @@ const Signup = () => {
       <form action="" className="user-form flex">
         <input
           type="input"
-          name="username"
-          placeholder="Username"
-          id="username"
-          onChange={setUsername}
+          name="name"
+          placeholder="User name"
+          id="name"
+          onChange={setName}
         />
         <div
           className="backend-error"
@@ -103,6 +104,6 @@ const Signup = () => {
       </form>
     </section>
   );
-};
+}
 
 export default Signup;

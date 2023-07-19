@@ -1,9 +1,9 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import tutorsReducer from './tutors/tutors';
+import laptopsReducer from './laptops/laptops';
 import userReducer from './user/session-redux';
 
 const rootReducer = combineReducers({
-  tutors: tutorsReducer,
+  laptops: laptopsReducer,
   users: userReducer,
 });
 
